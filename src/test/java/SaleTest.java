@@ -49,4 +49,23 @@ public class SaleTest {
     Sale savedSale = Sale.all().get(0);
     assertEquals(testSale.getId(), savedSale.getId());
   }
+
+  @Test
+  public void all_returnsAllInstancesOfSale_true() {
+    Sale firstSale = new Sale(1, rightNow);
+    firstSale.save();
+    Sale secondSale = new Sale(2, rightNow);
+    secondSale.save();
+    assertEquals(true, Sale.all().get(0).equals(firstSale));
+    assertEquals(true, Sale.all().get(1).equals(secondSale));
+  }
+
+  @Test
+  public void find_returnsSaleWithSameId_secondSale() {
+    Sale firstSale = new Sale(1, rightNow);
+    firstSale.save();
+    Sale secondSale = new Sale(2, rightNow);
+    secondSale.save();
+    assertEquals(Sale.find(secondSale.getId()), secondSale);
+  }
 }
