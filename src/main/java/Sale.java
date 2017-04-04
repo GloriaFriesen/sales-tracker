@@ -12,9 +12,8 @@ public class Sale {
   private Timestamp time_sold;
   private int id;
 
-  public Sale(int item_id, Timestamp time_sold) {
+  public Sale(int item_id) {
     this.item_id = item_id;
-    this.time_sold = time_sold;
     this.id = id;
   }
 
@@ -38,10 +37,9 @@ public class Sale {
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO sales (item_id, time_sold) VALUES (:item_id, :time_sold)";
+      String sql = "INSERT INTO sales (item_id, time_sold) VALUES (:item_id, now())";
       this.id = (int) con.createQuery(sql, true)
       .addParameter("item_id", this.item_id)
-      .addParameter("time_sold", this.time_sold)
       .executeUpdate()
       .getKey();
     }
