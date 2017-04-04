@@ -8,9 +8,27 @@ import java.util.TimerTask;
 import java.sql.Timestamp;
 
 public class Item {
+  private String name;
+  private int price;
+  private int quantity;
+  private int id;
 
-  public Item() {
-
+  public Item(String name, int price, int quantity) {
+    this.name = name;
+    this.price = price;
+    this.quantity = quantity;
+    this.id = id;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public int getPrice() {
+    return price;
+  }
+
+  public int getQuantity() {
+    return quantity;
+  }
 }
