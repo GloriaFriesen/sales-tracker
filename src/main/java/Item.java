@@ -31,4 +31,39 @@ public class Item {
   public int getQuantity() {
     return quantity;
   }
+
+  @Override
+  public boolean equals(Object otherItem){
+    if (!(otherItem instanceof Item)) {
+      return false;
+    } else {
+      Item newItem = (Item) otherItem;
+      return this.getName().equals(newItem.getName()) &&
+             this.getPrice() == newItem.getPrice() &&
+             this.getQuantity() == newItem.getQuantity();
+    }
+  }
+
+  public void save() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO items (name, price, quantity) VALUES (:name, :price, :quantity)";
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("name", this.name)
+        .addParameter("price", this.price)
+        .addParameter("quantity", this.quantity)
+        .executeUpdate()
+        .getKey();
+    }
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public static List<Item> all() {
+    String sql = "SELECT * FROM items";
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql).executeAndFetch(Item.class);
+    }
+  }
 }
