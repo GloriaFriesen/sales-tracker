@@ -69,4 +69,13 @@ public class ItemTest {
     assertEquals(true, Item.all().get(0).equals(firstItem));
     assertEquals(true, Item.all().get(1).equals(secondItem));
   }
+
+  @Test
+  public void find_returnsItemWithSameId_secondItem() {
+    Item firstItem = new Item("collar", 10, 5);
+    firstItem.save();
+    Item secondItem = new Item("leash", 12, 2);
+    secondItem.save();
+    assertEquals(Item.find(secondItem.getId()), secondItem);
+  }
 }

@@ -66,4 +66,14 @@ public class Item {
       return con.createQuery(sql).executeAndFetch(Item.class);
     }
   }
+
+  public static Item find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM items WHERE id=:id";
+      Item item = con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Item.class);
+      return item;
+    }
+  }
 }
