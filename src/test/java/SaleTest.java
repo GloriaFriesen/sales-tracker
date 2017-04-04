@@ -68,4 +68,14 @@ public class SaleTest {
     secondSale.save();
     assertEquals(Sale.find(secondSale.getId()), secondSale);
   }
+
+  @Test
+  public void save_savesItemIdIntoDB_true() {
+    Item testItem = new Item("collar", 10, 5);
+    testItem.save();
+    Sale testSale = new Sale(testItem.getId(), rightNow);
+    testSale.save();
+    Sale savedSale = Sale.find(testSale.getId());
+    assertEquals(savedSale.getItemId(), testItem.getId());
+  }
 }
